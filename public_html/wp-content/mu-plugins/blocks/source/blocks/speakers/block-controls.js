@@ -61,11 +61,11 @@ export class BlockControls extends Component {
 			default :
 				output = (
 					<Placeholder
-						className={ classnames( 'wordcamp__edit-placeholder', 'has-no-mode' ) }
+						className={ classnames( 'wordcamp-block__edit-placeholder', 'has-no-mode' ) }
 						icon={ icon }
 						label={ LABEL }
 					>
-						<div className={ 'wordcamp__edit-mode-option' } >
+						<div className={ 'wordcamp-block__edit-mode-option' } >
 							<Button
 								isDefault
 								isLarge
@@ -77,7 +77,7 @@ export class BlockControls extends Component {
 							</Button>
 						</div>
 
-						<div className={ 'wordcamp__edit-mode-option' } >
+						<div className={ 'wordcamp-block__edit-mode-option' } >
 							<ContentSelect
 								icon={ icon }
 								label={ __(

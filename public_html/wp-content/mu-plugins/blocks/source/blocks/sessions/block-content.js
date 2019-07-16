@@ -58,7 +58,7 @@ function SessionSpeakers( { session } ) {
 	);
 
 	return (
-		<div className="wordcamp__post-meta wordcamp-sessions__speakers">
+		<div className="wordcamp-block__post-meta wordcamp-sessions__speakers">
 			{ speakers }
 		</div>
 	);
@@ -294,7 +294,7 @@ export class BlockContent extends Component {
 						}
 
 						{ ( show_meta || show_category ) &&
-						<div className="wordcamp__post-meta wordcamp-sessions__details">
+						<div className="wordcamp-block__post-meta wordcamp-sessions__details">
 							{ show_meta &&
 								<SessionMeta session={ post } />
 							}
