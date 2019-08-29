@@ -1829,11 +1829,29 @@ class WordCamp_Post_Types_Plugin {
 				'labels'       => $labels,
 				'rewrite'      => array( 'slug' => 'track' ),
 				'query_var'    => 'track',
-				'hierarchical' => true,
 				'public'       => true,
 				'show_ui'      => true,
 				'show_in_rest' => true,
 				'rest_base'    => 'session_track',
+
+				/*
+				 * There isn't a common or compelling use case for hierarchical tracks, and they're difficult to
+				 * display in the Schedule block.
+				 */
+				'hierarchical' => wcorg_skip_feature( 'flat_session_tracks' ) ? true : false,
+
+				// todo before deploy, assign `flat_session_tracks` flag to existing sites
+
+				/*
+				 * Use the hierarchical UI even if the taxonomy isn't hierarchical, because the list of tracks is
+				 * a still a fixed list (like categories), rather than a more free-form list like tags. The
+				 * checkbox UI is much easier to pick from than having to remember the names and type them in.
+				 */
+				'meta_box_cb' => 'post_categories_meta_box',
+					// todo this works in classic, but not in gutenberg
+					// https://github.com/WordPress/gutenberg/issues/13816#issuecomment-532885577
+					// https://github.com/WordPress/gutenberg/issues/17476
+					// see edit.js for attempts at gutenberg solution
 			)
 		);
 
