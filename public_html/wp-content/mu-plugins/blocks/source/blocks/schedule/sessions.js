@@ -130,7 +130,7 @@ function Session( { session, allTracks } ) {
 	);
 
 	const implicitTrackId = 0; // See print_dynamic_styles().
-		// todo probably move ^ higher and share w/ js that prints dynamic css, when that gets added
+		// todo probably move ^ into higher component and share w/ js that prints dynamic css, when that gets added
 	const startTrackId = assignedTracks.length ? assignedTracks[ 0 ].id : implicitTrackId;
 	let endTrackId = assignedTracks.length ? assignedTracks[ assignedTracks.length - 1 ].id : implicitTrackId;
 

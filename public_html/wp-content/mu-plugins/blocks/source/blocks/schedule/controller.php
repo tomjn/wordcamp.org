@@ -85,7 +85,6 @@ function print_dynamic_styles() {
 
 	foreach ( $blocks as $block ) :
 		if ( 'wordcamp/schedule' !== $block['blockName'] ) {
-			// todo test with multiple blocks that show different days/tracks.
 			continue;
 		}
 
@@ -120,8 +119,6 @@ function print_dynamic_styles() {
 								%s
 							} ',
 							esc_html( $date ),
-								// todo this needs to include the track ids, and any other options, b/c could have multiple blocks on one page w/ different options
-								// or maybe generate some kind of unique block id that won't change? that way organizers can target w/ custom css and not worry about it breaking if they change options?
 							esc_html( render_grid_template_rows( $chosen_sessions ) ),
 							esc_html( render_grid_template_columns( $tracks ) )
 						);
@@ -140,6 +137,7 @@ add_action( 'wp_print_styles', __NAMESPACE__ . '\print_dynamic_styles' );
  * @todo remove this when building inspector controls, because the editor needs the CSS generated on the fly
  * in response to user actions (selecting days, tracks, etc). The admin hook is only here temporarily while the static
  * interface is being built. The function will eventually only be used on the front-end.
+ * or maybe generate all the styles in JS, if going to render the front end from JS instead of PHP?
  */
 add_action( 'admin_print_styles', __NAMESPACE__ . '\print_dynamic_styles' );
 
@@ -355,7 +353,7 @@ function get_session_posts( array $attributes ) {
  * @return array
  */
 function get_attributes_schema() {
-	// need to update this once pr is merged to make them dry
+	// todo need to update this once pr is merged to make them dry
 	// this one will be different than others in that it wont have a 'mode', so need to make that not a shared attribute? or maybe leave it sahred since most blocks use it, but explicilty remove it here?
 
 	return array(

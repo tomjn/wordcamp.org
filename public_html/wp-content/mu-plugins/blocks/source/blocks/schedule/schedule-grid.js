@@ -13,8 +13,6 @@ import { Sessions } from './sessions';
 
 /* todo
  *
- * rebased this against prod, so make sure that this doesn't introduce any artifcats
- *  (git diff master and check each line)
  * diff against other blocks for consistency
  * php/js lint everything
  * kelly's feedback
@@ -27,10 +25,8 @@ import { Sessions } from './sessions';
  * 	    what will this look lke with 15 tracks ala 2012.nyc? or a slightly-less-unreasonable 8 tracks ala
  * 	    2009.newyork ? probably don't need to handle those edge cases
  *
- * commit msg - length fixes 3623, others see/fixes 3117, #3842
- * props mark, mel, others
  *
- * before deploy, assign `flat_session_tracks` flag to existing sites
+ * `git diff production` and check each line to make sure it's clean
  */
 
 /**
