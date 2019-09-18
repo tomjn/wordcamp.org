@@ -217,7 +217,7 @@ class WordCamp_Post_Types_Plugin {
 		$current_screen = get_current_screen();
 
 		// Order by session time.
-		if ( 'edit-wcb_session' == $current_screen->id && $query->get( 'orderby' ) == '_wcpt_session_time' ) {
+		if ( 'edit-wcb_session' === $current_screen->id && $query->get( 'orderby' ) === '_wcpt_session_time' ) {
 			$query->set( 'meta_key', '_wcpt_session_time' );
 			$query->set( 'orderby', 'meta_value_num' );
 		}
@@ -251,14 +251,14 @@ class WordCamp_Post_Types_Plugin {
 		);
 
 		// Enqueues scripts and styles for session admin page.
-		if ( 'wcb_session' == $post_type ) {
+		if ( 'wcb_session' === $post_type ) {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 			wp_enqueue_style( 'jquery-ui' );
 			wp_enqueue_style( 'wp-datepicker-skins' );
 		}
 
 		// Enqueues scripts and styles for sponsors admin page.
-		if ( 'wcb_sponsor' == $post_type ) {
+		if ( 'wcb_sponsor' === $post_type ) {
 			wp_enqueue_script( 'wcb-spon' );
 		}
 	}
@@ -270,7 +270,7 @@ class WordCamp_Post_Types_Plugin {
 		global $post_type;
 
 		// DatePicker for Session posts.
-		if ( 'wcb_session' == $post_type ) :
+		if ( 'wcb_session' === $post_type ) :
 			?>
 
 			<script type="text/javascript">
@@ -392,7 +392,7 @@ class WordCamp_Post_Types_Plugin {
 				$session_track_titles = is_array( $session_tracks ) ? implode( ', ', wp_list_pluck( $session_tracks, 'name' ) ) : '';
 				$session_type         = get_post_meta( $session->ID, '_wcpt_session_type', true );
 
-				if ( ! in_array( $session_type, array( 'session', 'custom' ) ) ) {
+				if ( ! in_array( $session_type, array( 'session', 'custom' ), true ) ) {
 					$session_type = 'session';
 				}
 
@@ -431,9 +431,9 @@ class WordCamp_Post_Types_Plugin {
 				$content = '<div class="wcb-session-cell-content">';
 
 				// Determine the session title.
-				if ( 'permalink' == $attr['session_link'] && 'session' == $session_type ) {
+				if ( 'permalink' === $attr['session_link'] && 'session' === $session_type ) {
 					$session_title_html = sprintf( '<a class="wcpt-session-title" href="%s">%s</a>', esc_url( get_permalink( $session->ID ) ), $session_title );
-				} elseif ( 'anchor' == $attr['session_link'] && 'session' == $session_type ) {
+				} elseif ( 'anchor' === $attr['session_link'] && 'session' === $session_type ) {
 					$session_title_html = sprintf( '<a class="wcpt-session-title" href="%s">%s</a>', esc_url( $this->get_wcpt_anchor_permalink( $session->ID ) ), $session_title );
 				} else {
 					$session_title_html = sprintf( '<span class="wcpt-session-title">%s</span>', $session_title );
@@ -445,13 +445,13 @@ class WordCamp_Post_Types_Plugin {
 				foreach ( $speakers as $speaker ) {
 					$speaker_name = apply_filters( 'the_title', $speaker->post_title );
 
-					if ( 'anchor' == $attr['speaker_link'] ) {
+					if ( 'anchor' === $attr['speaker_link'] ) {
 						// speakers/#wcorg-speaker-slug.
 						$speaker_permalink = $this->get_wcpt_anchor_permalink( $speaker->ID );
-					} elseif ( 'wporg' == $attr['speaker_link'] ) {
+					} elseif ( 'wporg' === $attr['speaker_link'] ) {
 						// profiles.wordpress.org/user.
 						$speaker_permalink = $this->get_speaker_wporg_permalink( $speaker->ID );
-					} elseif ( 'permalink' == $attr['speaker_link'] ) {
+					} elseif ( 'permalink' === $attr['speaker_link'] ) {
 						// year.city.wordcamp.org/speakers/slug.
 						$speaker_permalink = get_permalink( $speaker->ID );
 					}
@@ -472,7 +472,7 @@ class WordCamp_Post_Types_Plugin {
 				$content .= '</div>';
 
 				// Favourite session star-icon.
-				if ( 'session' == $session_type ) {
+				if ( 'session' === $session_type ) {
 					$content .= '<div class="wcb-session-favourite-icon">';
 					$content .= '<a href="#" role="button" class="fav-session-button" aria-pressed="false"><span class="screen-reader-text">';
 					$content .= sprintf( esc_html__( 'Favorite session: %s', 'wordcamporg' ), $session_title );
@@ -482,13 +482,13 @@ class WordCamp_Post_Types_Plugin {
 				$columns_clone = $columns;
 
 				// If the next element in the table is the same as the current one, use colspan.
-				if ( key( array_slice( $columns, -1, 1, true ) ) != $key ) {
+				if ( key( array_slice( $columns, -1, 1, true ) ) !== $key ) {
 					foreach ( $columns_clone as $clonekey => $clonevalue ) {
-						if ( $clonekey == $key ) {
+						if ( $clonekey === $key ) {
 							continue;
 						}
 
-						if ( ! empty( $entry[ $clonevalue ] ) && $entry[ $clonevalue ] == $session->ID ) {
+						if ( ! empty( $entry[ $clonevalue ] ) && $entry[ $clonevalue ] === $session->ID ) {
 							$colspan++;
 							$skip_next++;
 						} else {
@@ -500,7 +500,7 @@ class WordCamp_Post_Types_Plugin {
 				$columns_html .= sprintf( '<td colspan="%d" class="%s" data-track-title="%s" data-session-id="%s">%s</td>', $colspan, esc_attr( implode( ' ', $classes ) ), $session_track_titles, esc_attr( $session->ID ), $content );
 			}
 
-			$global_session      = count( $columns ) == $colspan ? ' global-session' : '';
+			$global_session      = count( $columns ) === $colspan ? ' global-session' : '';
 			$global_session_slug = $global_session ? ' ' . sanitize_html_class( sanitize_title_with_dashes( $session->post_title ) ) : '';
 
 			$html .= sprintf( '<tr class="%s">', sanitize_html_class( 'wcpt-time-' . date( $time_format, $time ) ) . $global_session . $global_session_slug );
@@ -633,7 +633,7 @@ class WordCamp_Post_Types_Plugin {
 	 */
 	public function get_speaker_wporg_permalink( $speaker_id ) {
 		$post = get_post( $speaker_id );
-		if ( 'wcb_speaker' != $post->post_type  || 'publish' != $post->post_status ) {
+		if ( 'wcb_speaker' !== $post->post_type  || 'publish' !== $post->post_status ) {
 			return null;
 		}
 
@@ -768,7 +768,7 @@ class WordCamp_Post_Types_Plugin {
 	protected function is_single_cpt_post( $post_type ) {
 		global $wp_query;
 
-		return isset( $wp_query->query[ $post_type ] ) && $post_type == $wp_query->query['post_type'];
+		return isset( $wp_query->query[ $post_type ] ) && $post_type === $wp_query->query['post_type'];
 	}
 
 	/**
@@ -790,7 +790,7 @@ class WordCamp_Post_Types_Plugin {
 		}
 
 		$site_id = get_current_blog_id();
-		if ( $site_id <= apply_filters( 'wcpt_speaker_post_avatar_min_site_id', 463 ) && ! in_array( $site_id, $enabled_site_ids ) ) {
+		if ( $site_id <= apply_filters( 'wcpt_speaker_post_avatar_min_site_id', 463 ) && ! in_array( $site_id, $enabled_site_ids, true ) ) {
 			return $content;
 		}
 
@@ -818,7 +818,7 @@ class WordCamp_Post_Types_Plugin {
 		}
 
 		$site_id = get_current_blog_id();
-		if ( $site_id <= apply_filters( 'wcpt_session_post_speaker_info_min_site_id', 463 ) && ! in_array( $site_id, $enabled_site_ids ) ) {
+		if ( $site_id <= apply_filters( 'wcpt_session_post_speaker_info_min_site_id', 463 ) && ! in_array( $site_id, $enabled_site_ids, true ) ) {
 			return $content;
 		}
 
@@ -894,7 +894,7 @@ class WordCamp_Post_Types_Plugin {
 
 		$site_id = get_current_blog_id();
 
-		if ( $site_id <= apply_filters( 'wcpt_session_post_slides_info_min_site_id', 699 ) && ! in_array( $site_id, $enabled_site_ids ) ) {
+		if ( $site_id <= apply_filters( 'wcpt_session_post_slides_info_min_site_id', 699 ) && ! in_array( $site_id, $enabled_site_ids, true ) ) {
 			return $content;
 		}
 
@@ -940,7 +940,7 @@ class WordCamp_Post_Types_Plugin {
 
 		$site_id = get_current_blog_id();
 
-		if ( $site_id <= apply_filters( 'wcpt_session_post_video_info_min_site_id', 699 ) && ! in_array( $site_id, $enabled_site_ids ) ) {
+		if ( $site_id <= apply_filters( 'wcpt_session_post_video_info_min_site_id', 699 ) && ! in_array( $site_id, $enabled_site_ids, true ) ) {
 			return $content;
 		}
 
@@ -1026,7 +1026,7 @@ class WordCamp_Post_Types_Plugin {
 		}
 
 		$site_id = get_current_blog_id();
-		if ( $site_id <= apply_filters( 'wcpt_speaker_post_session_info_min_site_id', 463 ) && ! in_array( $site_id, $enabled_site_ids ) ) {
+		if ( $site_id <= apply_filters( 'wcpt_speaker_post_session_info_min_site_id', 463 ) && ! in_array( $site_id, $enabled_site_ids, true ) ) {
 			return $content;
 		}
 
@@ -1240,17 +1240,17 @@ class WordCamp_Post_Types_Plugin {
 	 * Renders session info metabox.
 	 */
 	public function metabox_session_info() {
-		$post             = get_post();
-		$session_time     = absint( get_post_meta( $post->ID, '_wcpt_session_time', true ) );
-		$session_date     = ( $session_time ) ? date( 'Y-m-d', $session_time ) : date( 'Y-m-d' );
-		$session_hours    = ( $session_time ) ? date( 'g', $session_time )     : date( 'g' );
-		$session_minutes  = ( $session_time ) ? date( 'i', $session_time )     : '00';
-		$session_meridiem = ( $session_time ) ? date( 'a', $session_time )     : 'am';
+		$post                   = get_post();
+		$session_time           = absint( get_post_meta( $post->ID, '_wcpt_session_time', true ) );
+		$session_date           = ( $session_time ) ? date( 'Y-m-d', $session_time ) : date( 'Y-m-d' );
+		$session_hours          = ( $session_time ) ? date( 'g', $session_time )     : date( 'g' );
+		$session_minutes        = ( $session_time ) ? date( 'i', $session_time )     : '00';
+		$session_meridiem       = ( $session_time ) ? date( 'a', $session_time )     : 'am';
 		$session_length_hours   = $post->_wcpt_session_length_hours   ?? self::DEFAULT_LENGTH_HOURS;
 		$session_length_minutes = $post->_wcpt_session_length_minutes ?? self::DEFAULT_LENGTH_MINUTES;
-		$session_type     = get_post_meta( $post->ID, '_wcpt_session_type', true );
-		$session_slides   = get_post_meta( $post->ID, '_wcpt_session_slides', true );
-		$session_video    = get_post_meta( $post->ID, '_wcpt_session_video',  true );
+		$session_type           = get_post_meta( $post->ID, '_wcpt_session_type',   true );
+		$session_slides         = get_post_meta( $post->ID, '_wcpt_session_slides', true );
+		$session_video          = get_post_meta( $post->ID, '_wcpt_session_video',  true );
 
 		?>
 
@@ -1440,7 +1440,7 @@ class WordCamp_Post_Types_Plugin {
 	 * Fired when a post is saved, makes sure additional metadata is also updated.
 	 */
 	public function save_post_speaker( $post_id, $post ) {
-		if ( wp_is_post_revision( $post_id ) || 'wcb_speaker' != $post->post_type || ! current_user_can( 'edit_post', $post_id ) ) {
+		if ( wp_is_post_revision( $post_id ) || 'wcb_speaker' !== $post->post_type || ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
 
@@ -1467,7 +1467,7 @@ class WordCamp_Post_Types_Plugin {
 	 * When an Organizer post is saved, update some meta data.
 	 */
 	public function save_post_organizer( $post_id, $post ) {
-		if ( wp_is_post_revision( $post_id ) || 'wcb_organizer' != $post->post_type || ! current_user_can( 'edit_post', $post_id ) ) {
+		if ( wp_is_post_revision( $post_id ) || 'wcb_organizer' !== $post->post_type || ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
 
@@ -1487,7 +1487,7 @@ class WordCamp_Post_Types_Plugin {
 	 * Fired when a post is saved, updates additional sessions metadada.
 	 */
 	public function save_post_session( $post_id, $post ) {
-		if ( wp_is_post_revision( $post_id ) || 'wcb_session' != $post->post_type ) {
+		if ( wp_is_post_revision( $post_id ) || 'wcb_session' !== $post->post_type ) {
 			return;
 		}
 
@@ -1505,7 +1505,7 @@ class WordCamp_Post_Types_Plugin {
 				sanitize_text_field( $_POST['wcpt-session-date'] ),
 				absint( $_POST['wcpt-session-hour'] ),
 				absint( $_POST['wcpt-session-minutes'] ),
-				'am' == $_POST['wcpt-session-meridiem'] ? 'am' : 'pm'
+				'am' === $_POST['wcpt-session-meridiem'] ? 'am' : 'pm'
 			) );
 			update_post_meta( $post_id, '_wcpt_session_time', $session_time );
 
@@ -1514,7 +1514,7 @@ class WordCamp_Post_Types_Plugin {
 
 			// Update session type.
 			$session_type = sanitize_text_field( $_POST['wcpt-session-type'] );
-			if ( ! in_array( $session_type, array( 'session', 'custom' ) ) ) {
+			if ( ! in_array( $session_type, array( 'session', 'custom' ), true ) ) {
 				$session_type = 'session';
 			}
 
@@ -1524,7 +1524,7 @@ class WordCamp_Post_Types_Plugin {
 			update_post_meta( $post_id, '_wcpt_session_slides', esc_url_raw( $_POST['wcpt-session-slides'] ) );
 
 			// Update session video link.
-			if ( 'wordpress.tv' == str_replace( 'www.', '', strtolower( wp_parse_url( $_POST['wcpt-session-video'], PHP_URL_HOST ) ) ) ) {
+			if ( 'wordpress.tv' === str_replace( 'www.', '', strtolower( wp_parse_url( $_POST['wcpt-session-video'], PHP_URL_HOST ) ) ) ) {
 				update_post_meta( $post_id, '_wcpt_session_video', esc_url_raw( $_POST['wcpt-session-video'] ) );
 			}
 		}
@@ -1591,7 +1591,7 @@ class WordCamp_Post_Types_Plugin {
 	 * Save meta data for Sponsor posts
 	 */
 	public function save_post_sponsor( $post_id, $post ) {
-		if ( wp_is_post_revision( $post_id ) || 'wcb_sponsor' != $post->post_type || ! current_user_can( 'edit_post', $post_id ) ) {
+		if ( wp_is_post_revision( $post_id ) || 'wcb_sponsor' !== $post->post_type || ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
 
@@ -2083,7 +2083,7 @@ class WordCamp_Post_Types_Plugin {
 	public function manage_sortable_columns( $sortable ) {
 		$current_filter = current_filter();
 
-		if ( 'manage_edit-wcb_session_sortable_columns' == $current_filter ) {
+		if ( 'manage_edit-wcb_session_sortable_columns' === $current_filter ) {
 			$sortable['wcb_session_time'] = '_wcpt_session_time';
 		}
 
@@ -2096,18 +2096,18 @@ class WordCamp_Post_Types_Plugin {
 	public function display_post_states( $states ) {
 		$post = get_post();
 
-		if ( 'wcb_session' != $post->post_type ) {
+		if ( 'wcb_session' !== $post->post_type ) {
 			return $states;
 		}
 
 		$session_type = get_post_meta( $post->ID, '_wcpt_session_type', true );
-		if ( ! in_array( $session_type, array( 'session', 'custom' ) ) ) {
+		if ( ! in_array( $session_type, array( 'session', 'custom' ), true ) ) {
 			$session_type = 'session';
 		}
 
-		if ( 'session' == $session_type ) {
+		if ( 'session' === $session_type ) {
 			$states['wcpt-session-type'] = __( 'Session', 'wordcamporg' );
-		} elseif ( 'custom' == $session_type ) {
+		} elseif ( 'custom' === $session_type ) {
 			$states['wcpt-session-type'] = __( 'Custom', 'wordcamporg' );
 		}
 
@@ -2177,7 +2177,7 @@ class WordCamp_Post_Types_Plugin {
 	 */
 	public function default_comment_ping_status( $status ) {
 		$screen = get_current_screen();
-		if ( ! empty( $screen->post_type ) && 'wcb_speaker' == $screen->post_type ) {
+		if ( ! empty( $screen->post_type ) && 'wcb_speaker' === $screen->post_type ) {
 			$status = 'closed';
 		}
 
