@@ -15,7 +15,12 @@ import { Sessions } from './sessions';
  *
  * diff against other blocks for consistency
  * php/js lint everything
- * kelly's feedback
+ * kelly & mark's feedback
+ *      https://github.com/WordPress/wordcamp.org/pull/104#pullrequestreview-275511236
+ *      https://github.com/WordPress/wordcamp.org/pull/104#discussion_r315372667
+ *      https://github.com/WordPress/wordcamp.org/pull/104#discussion_r320027958
+ *      https://github.com/WordPress/wordcamp.org/pull/104#discussion_r320033514
+ *      https://github.com/WordPress/wordcamp.org/pull/104#issuecomment-528121891
  *
  *
  * test under ie11 - should just see mobile/fallback schedule
